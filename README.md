@@ -5,7 +5,7 @@
 - [ ] Add Examples
 
 ### Author:
-[Vinceveve](https://github.com/Vinceveve)
+ - [Vinceveve](https://github.com/Vinceveve)
 ### Contributors:
-[etienneroudeix](https://github.com/etienneroudeix)
-[Th3Mouk](https://github.com/th3mouk)
+ - [etienneroudeix](https://github.com/etienneroudeix)
+ - [Th3Mouk](https://github.com/th3mouk)
