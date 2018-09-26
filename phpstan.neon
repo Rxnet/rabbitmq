@@ -3,6 +3,4 @@ parameters:
 		- %rootDir%/../../../vendor
 
 	ignoreErrors:
-	    - '#Rx\\Observable#'
-	    - '#anonymous function has invalid typehint type Rx\\ObserverInterface#'
 	    - '#function call_user_func_array expects#'

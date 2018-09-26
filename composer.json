@@ -10,7 +10,8 @@
     "require": {
         "php": "^7.2",
         "ext-json": "*",
-        "bunny/bunny": "^0.4.1"
+        "bunny/bunny": "^0.4.1",
+        "reactivex/rxphp": "^2.0"
     },
     "require-dev": {
       "phpstan/phpstan": "^0.10",
