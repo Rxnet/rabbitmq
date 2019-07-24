@@ -5,6 +5,10 @@
       {
         "name": "Vinceveve",
         "email": "vermersch@gmail.com"
+      },
+      {
+        "name": "Jérémy Marodon",
+        "email": "marodon.jeremy@gmail.com"
       }
     ],
     "require": {
@@ -19,7 +23,7 @@
     },
     "autoload": {
       "psr-4": {
-        "Rxnet\\RabbitMq\\": ""
+        "Rxnet\\RabbitMq\\": "src/"
       }
     }
 }
