@@ -16,9 +16,9 @@ class Exchange
     const DELIVERY_RAM = 2;
     const DELIVERY_DISK = 1;
     const TYPE_DIRECT = 'direct';
-    const PASSIVE = true;
-    const DURABLE = true;
-    const AUTO_DELETE = true;
+    const PASSIVE = 'passive';
+    const DURABLE = 'durable';
+    const AUTO_DELETE = 'auto_delete';
 
     protected $channel;
     protected $exchange;
