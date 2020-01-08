@@ -23,15 +23,14 @@ class Queue
     const DELETE_IF_EMPTY = 'if_empty';
     const DELETE_IF_UNUSED = 'if_unused';
 
-    protected $mq;
-    protected $exchange;
-    protected $queue;
+    protected $queue_name;
     protected $channel;
+    protected $exchange;
 
-    public function __construct($queue, Channel $channel = null)
+    public function __construct($queue_name, Channel $channel = null)
     {
         $this->channel = $channel;
-        $this->queue = $queue;
+        $this->queue_name = $queue_name;
     }
 
     public function setChannel(Channel $channel): Queue
@@ -47,7 +46,7 @@ class Queue
             $opts = \func_get_args();
         }
 
-        $params = [$this->queue];
+        $params = [$this->queue_name];
         $params[] = \in_array(self::PASSIVE, $opts);
         $params[] = \in_array(self::DURABLE, $opts);
         $params[] = \in_array(self::EXCLUSIVE, $opts);
@@ -60,21 +59,21 @@ class Queue
 
     public function bind($routingKey, $exchange = 'amq.direct'): Observable
     {
-        $promise = $this->channel->queueBind($this->queue, $exchange, $routingKey);
+        $promise = $this->channel->queueBind($this->queue_name, $exchange, $routingKey);
 
         return Observable::fromPromise($promise);
     }
 
     public function purge(): Observable
     {
-        $promise = $this->channel->queuePurge($this->queue);
+        $promise = $this->channel->queuePurge($this->queue_name);
 
         return Observable::fromPromise($promise);
     }
 
     public function delete($opts = []): Observable
     {
-        $params = [$this->queue];
+        $params = [$this->queue_name];
         $params[] = \in_array(self::DELETE_IF_UNUSED, $opts);
         $params[] = \in_array(self::DELETE_IF_EMPTY, $opts);
         $promise = \call_user_func_array([$this->channel, 'queueDelete'], $params);
@@ -95,7 +94,7 @@ class Queue
             function (ObserverInterface $observer) use ($consumerId, $opts) {
                 $params = [
                     'callback' => [$observer, 'onNext'],
-                    'queue' => $this->queue,
+                    'queue' => $this->queue_name,
                     'consumerTag' => $consumerId,
                     'noLocal' => \in_array(Client::CHANNEL_NO_LOCAL, $opts, true),
                     'noAck' => \in_array(Client::CHANNEL_NO_ACK, $opts, true),
@@ -123,5 +122,10 @@ class Queue
             ->map(function (BaseMessage $message) {
                 return new Message($this->channel, $message);
             });
+    }
+
+    public function name(): string
+    {
+        return $this->queue_name;
     }
 }
